@@ -41,7 +41,7 @@ fn get_user_input() -> String {
     return response.trim().to_uppercase();
 }
 fn generate_computer_choice() -> String {
-    let num = rand::thread_rng().gen_range(0..3);
+    let num = rand::thread_rng().gen_range(0..=2);
     match num {
         1 => PAPER.to_string(),
         2 => SCISSORS.to_string(),
