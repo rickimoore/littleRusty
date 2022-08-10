@@ -22,14 +22,6 @@ fn show_instructions() {
               How to play:\n\
               I will signal `rock, paper, scissors, shoot!`\n\
               On `shoot` input your response to and the winner will be revealed!");
-
-    println!("{}", ROCK);
-    wait(500);
-    println!("{}", PAPER);
-    wait(500);
-    println!("{}", SCISSORS);
-    wait(1000);
-    println!("Shoot!!! (Input your response...)");
 }
 fn get_user_input() -> String {
     let mut response = String::new();
@@ -52,22 +44,14 @@ fn generate_computer_choice() -> String {
 fn validate_choice(value: &String) -> bool {
     return value.eq(ROCK) || value.eq(PAPER) || value.eq(SCISSORS);
 }
-fn calculate_winner(u_value: &String, c_value: &String) -> Player {
-    if u_value.eq(c_value) {
-        return Player::BOTH;
-    }
-
-    if c_value.eq(ROCK) && u_value.eq(PAPER)
-        || c_value.eq(PAPER) && u_value.eq(SCISSORS)
-        || c_value.eq(SCISSORS) && u_value.eq(ROCK) {
-        return Player::USER;
-    }
-
-    return Player::COMPUTER;
-}
-
-fn main() {
-    show_instructions();
+fn init_game() -> Player {
+    println!("{}", ROCK);
+    wait(500);
+    println!("{}", PAPER);
+    wait(500);
+    println!("{}", SCISSORS);
+    wait(1000);
+    println!("Shoot!!! (Input your response...)");
 
     let response = get_user_input();
     let computer_choice = generate_computer_choice();
@@ -87,5 +71,41 @@ fn main() {
         println!("It is a TIE. Try again!")
     } else {
         println!("Winner: {:?}", winner);
+    }
+
+    return winner;
+}
+fn calculate_winner(u_value: &String, c_value: &String) -> Player {
+    if u_value.eq(c_value) {
+        return Player::BOTH;
+    }
+
+    if c_value.eq(ROCK) && u_value.eq(PAPER)
+        || c_value.eq(PAPER) && u_value.eq(SCISSORS)
+        || c_value.eq(SCISSORS) && u_value.eq(ROCK) {
+        return Player::USER;
+    }
+
+    return Player::COMPUTER;
+}
+
+fn main() {
+    show_instructions();
+    let mut user_wins = 0;
+    let mut computer_wins = 0;
+    loop {
+        let result = init_game();
+
+        match result {
+            Player::USER => user_wins += 1,
+            Player::COMPUTER => computer_wins +=1,
+            _ => ()
+        }
+
+        if user_wins + computer_wins >= 3 {
+            println!("Computer Wins: {}", computer_wins);
+            println!("User Wins: {}", user_wins);
+            break;
+        }
     }
 }
