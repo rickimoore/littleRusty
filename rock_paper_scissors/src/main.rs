@@ -9,9 +9,9 @@ enum Player {
     BOTH
 }
 
-static ROCK: &'static str = "ROCK";
-static PAPER: &'static str = "PAPER";
-static SCISSORS: &'static str = "SCISSORS";
+const ROCK: &str = "ROCK";
+const PAPER: &str = "PAPER";
+const SCISSORS: &str = "SCISSORS";
 
 fn wait(milliseconds: u64) {
     thread::sleep(time::Duration::from_millis(milliseconds));
